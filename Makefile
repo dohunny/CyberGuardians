@@ -1,7 +1,7 @@
 all: lsh
 
 lsh : main.o lsh.o
-	gcc -o lsh lsh.o main.o
+	gcc -o lsh lsh.o main.o -lm
 
 lsh.o : lsh.c lsh.h
 

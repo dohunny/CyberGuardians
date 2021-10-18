@@ -25,83 +25,6 @@ int (*builtin_func[]) (char **) = {
   &lsh_exit
 };
 
-int lsh_num_builtins() {
-  return sizeof(builtin_str) / sizeof(char *);
-}
-
-/**
-   @brief Bultin command: change directory.
-   @param args List of args.  args[0] is "cd".  args[1] is the directory.
-   @return Always returns 1, to continue executing.
- */
-int lsh_cd(char **args)
-{
-  if (args[1] == NULL) {
-    fprintf(stderr, "lsh: expected argument to \"cd\"\n");
-  } else {
-    if (chdir(args[1]) != 0) {
-      perror("lsh");
-    }
-  }
-  return 1;
-}
-
-int checkAuth(char *srcPath){
-  int mode[] = {R_OK, W_OK, X_OK}
-  int res = 0;
-  for(int i = 0; i < 3; i++){
-    if(access(srcPath, mode[i]) == 0){
-      res += pow(2,i);
-      continue;
-    }
-    else printf("cannot access(i:%d)", i);
-  }
-  return res;
-}
-
-int lsh_mv(char **args){
-  FILE *in_fp, *out_fp;
-  char buff[4096];
-  size_t n_size;
-  int isRemoved;
-  int mode;
-
-  if (args[1] == NULL || args[2] == NULL) {
-    fprintf(stderr, "lsh: expected argument to \"mv\"\n");
-    return -1;
-  }
-  in_fp = fopen(args[1], "r");
-  if ( in_fp == NULL ) {
-    printf("Path Not Found: %s\n", args[1]);
-    return -1;
-  }
-  out_fp = fopen(args[2], "w");
-  if ( out_fp == NULL )
-  {
-    printf( "Path Not Found: %s\n", args[2]);
-    fclose(in_fp); 
-    return -1;
-  }
-  while(0 < (n_size = fread(buff, 1, sizeof(buff), in_fp)))
-  {
-      fwrite(buff, 1, n_size, out_fp);
-  }
-  fclose( in_fp );
-  fclose( out_fp );
-
-  // mode = checkAuth(args[1]);
-  // if chmod(args[2], mode)
-
-  if ( unlink(args[1]) == -1 )
-  {
-      printf( "Remove Error!\n");
-      return -1;
-  }
-
-  printf("Moved Successively\n");
-
-  return 1;
-}
 
 /**
    @brief Builtin command: print help.
@@ -131,6 +54,10 @@ int lsh_help(char **args)
 int lsh_exit(char **args)
 {
   return 0;
+}
+
+int lsh_num_builtins() {
+  return sizeof(builtin_str) / sizeof(char *);
 }
 
 /**
