@@ -14,6 +14,7 @@
 char *builtin_str[] = {
   "cd",
   "mv",
+  "ls",
   "help",
   "exit"
 };
@@ -21,6 +22,7 @@ char *builtin_str[] = {
 int (*builtin_func[]) (char **) = {
   &lsh_cd,
   &lsh_mv,
+  &lsh_ls,
   &lsh_help,
   &lsh_exit
 };
