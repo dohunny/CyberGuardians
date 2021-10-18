@@ -9,25 +9,8 @@
   @brief        LSH (Libstephen SHell)
 
 *******************************************************************************/
+#include "lsh.h"
 
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-/*
-  Function Declarations for builtin shell commands:
- */
-int lsh_cd(char **args);
-int lsh_help(char **args);
-int lsh_exit(char **args);
-int lsh_mv(char **args);
-
-/*
-  List of builtin commands, followed by their corresponding functions.
- */
 char *builtin_str[] = {
   "cd",
   "mv",
@@ -46,10 +29,6 @@ int lsh_num_builtins() {
   return sizeof(builtin_str) / sizeof(char *);
 }
 
-/*
-  Builtin function implementations.
-*/
-
 /**
    @brief Bultin command: change directory.
    @param args List of args.  args[0] is "cd".  args[1] is the directory.
@@ -67,16 +46,30 @@ int lsh_cd(char **args)
   return 1;
 }
 
-
+int checkAuth(char *srcPath){
+  int mode[] = {R_OK, W_OK, X_OK}
+  int res = 0;
+  for(int i = 0; i < 3; i++){
+    if(access(srcPath, mode[i]) == 0){
+      res += pow(2,i);
+      continue;
+    }
+    else printf("cannot access(i:%d)", i);
+  }
+  return res;
+}
 
 int lsh_mv(char **args){
   FILE *in_fp, *out_fp;
   char buff[4096];
   size_t n_size;
+  int isRemoved;
+  int mode;
 
   if (args[1] == NULL || args[2] == NULL) {
     fprintf(stderr, "lsh: expected argument to \"mv\"\n");
     return -1;
+  }
   in_fp = fopen(args[1], "r");
   if ( in_fp == NULL ) {
     printf("Path Not Found: %s\n", args[1]);
@@ -96,14 +89,16 @@ int lsh_mv(char **args){
   fclose( in_fp );
   fclose( out_fp );
 
-  isRemoved = unlink(args[1]);
-  if ( isRemoved == -1 )
+  // mode = checkAuth(args[1]);
+  // if chmod(args[2], mode)
+
+  if ( unlink(args[1]) == -1 )
   {
-      printf( "Remove Error: %d\n", isRemoved );
+      printf( "Remove Error!\n");
       return -1;
   }
 
-  printf("Moved Successively");
+  printf("Moved Successively\n");
 
   return 1;
 }
@@ -325,4 +320,3 @@ int main(int argc, char **argv)
 
   return EXIT_SUCCESS;
 }
-
