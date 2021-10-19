@@ -243,6 +243,11 @@ void lsh_loop(void)
   } while (status);
 }
 
+void sigint_handler(int signo){
+  printf("\nSigint!!!\n");
+  exit(0);
+}
+
 /**
    @brief Main entry point.
    @param argc Argument count.
@@ -252,6 +257,7 @@ void lsh_loop(void)
 int main(int argc, char **argv)
 {
   // Load config files, if any.
+  signal(SIGINT, sigint_handler);
 
   // Run command loop.
   lsh_loop();
