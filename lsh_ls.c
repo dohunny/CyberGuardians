@@ -66,6 +66,13 @@ int lsh_ls(char **args){
         }
         option_exist = 0;
     } else {
+        if (!strcmp(args[1],"--help")){
+            printf("\nUsage: ls [OPTION]... [FILE]...\n");
+            printf("%+8s\t\tdo not ignore entries starting with .\n", "-a");
+            printf("%+8s\t\tuse a long listing format\n", "-l");
+            printf("%+8s\t\tdisplay this help and exit\n", "--help");
+            return 1;
+        }
         if (args[2] == NULL) {
             // Path X, Option O
             if ((dp=opendir("./")) == NULL) {
