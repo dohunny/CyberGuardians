@@ -7,5 +7,5 @@
 # Developing Functions
 * mv maintain privilege
 * ls path/option position bug fix
-* sigtstp(ctrl+z) <br> process stop
-* sigcont(fg) <br> foreground
+* sigtstp(ctrl+z) <br>    ( process stop )
+* sigcont(fg) <br>    ( foreground )
