@@ -1,13 +1,11 @@
-# babyvm
+# Developed Functions
+* cd \<dir_path\>
+* mv \<src_path\> \<dst_path\>
+* ls \<dir_path\> \<options\> 
+<br>    ( options: "-l", "-al" )
 
-all: babyvm
-
-babyvm : main.o babyvm.o
-	g++ -o babyvm babyvm.o main.o
-
-babyvm.o : babyvm.cpp babyvm.h
-
-main.o : main.cpp babyvm.h
-
-clean:
-	rm *.o babyvm
+# Developing Functions
+* mv maintain privilege
+* ls path/option position bug fix
+* sigtstp(ctrl+z) <br>    ( process stop )
+* sigcont(fg) <br>    ( foreground )
