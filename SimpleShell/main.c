@@ -244,8 +244,7 @@ void lsh_loop(void)
 }
 
 void sigint_handler(int signo){
-  printf("\nSigint!!!\n");
-  exit(0);
+  printf("\n");
 }
 
 /**

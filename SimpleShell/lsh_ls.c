@@ -37,8 +37,6 @@ void rwx(file_mode){
   printf("  ");
 }
 
-
-
 int lsh_ls(char **args){
     DIR* dp = NULL;
     struct dirent* entry = NULL;

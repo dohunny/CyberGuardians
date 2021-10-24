@@ -12,7 +12,9 @@
 #include <pwd.h>
 #include <grp.h>
 #include <signal.h>
-
+#include <errno.h>
+#include <utime.h>
+#include <fcntl.h>
 
 /*
   Function Declarations for builtin shell commands:
